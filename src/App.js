@@ -6,6 +6,15 @@ import './App.css';
 import Profile from './components/profile';
 import DeviceTable from './components/deviceTable';
 
+import {
+  Wrapper,
+  Header,
+  Title,
+  Actions,
+  Container,
+  InnerContainer,
+} from './components/wrappers';
+
 class App extends Component {
   componentWillReceiveProps(nextProps) {
     if (!nextProps.data.loading && this.props.data.loading) {
@@ -32,13 +41,24 @@ class App extends Component {
     console.log(this.props.data)
     console.log(this.props.data.error)
     return (
-      <div className="App">
-        {data.loading && <p>Loading</p>}
-        {!data.loading && <Profile currentUser={data.currentUser} />}
-        {!data.loading && data.variables.hasSelectedOrganization && <DeviceTable data={data.organization.devices} />}
-
-        {JSON.stringify(data.organizations)}
-      </div>
+      <Wrapper>
+        <Header>
+          <Title>
+            Famoco Management  Suite
+          </Title>
+          <Actions>
+            Actions
+          </Actions>
+        </Header>
+        <Container>
+          <InnerContainer>
+            {data.loading && <p>Loading</p>}
+            {!data.loading && <Profile currentUser={data.currentUser} />}
+            {!data.loading && data.variables.hasSelectedOrganization && <DeviceTable data={data.organization.devices} />}
+            {JSON.stringify(data.organizations)}
+          </InnerContainer>
+        </Container>
+      </Wrapper>
     );
   }
 }
