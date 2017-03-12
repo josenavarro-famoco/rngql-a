@@ -1,5 +1,5 @@
-import React, { Component } from 'react';
-import { gql, graphql } from 'react-apollo';
+import React from 'react';
+import { gql } from 'react-apollo';
 
 const Profile = ({ currentUser: { username, email } }) => {
   return (

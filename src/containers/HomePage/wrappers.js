@@ -32,25 +32,13 @@ export const Container = styled.div`
   flex-basis: auto;
   background: red;
   flex-direction: row;
+  position: relative;
 `;
 
 export const InnerContainer = styled.div`
-  margin: -32px auto 32px;
+  // margin: -32px auto 32px;
+  margin: 16px auto;
   width: 1024px;
   max-width: 1024px;
   background: white;
-`;
-
-export const TableWrapper = styled.div`
-  & > * {
-    width: 100%;
-  }
-`;
-
-export const TableInnerWrapper = styled.div`
-  // max-height: 600px;
-  // overflow-y: scroll;
-  & > table {
-    width: 100%;
-  }
 `;
