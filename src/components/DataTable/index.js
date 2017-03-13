@@ -1,6 +1,6 @@
 import React from 'react';
-import { DataTable as Table, TableHeader} from 'react-mdl';
-
+import { DataTable as Table, TableHeader, IconButton, Menu, MenuItem } from 'react-mdl';
+import { fromJS, List } from 'immutable';
 import { TableWrapper, TableInnerWrapper } from './wrappers';
 
 import generateHeaders from './headers';
@@ -14,7 +14,7 @@ const ROWS = [
   {id: 1006, material: 'Laminate (Gold on Blue)', quantity: 10, price: 2.35},
 ];
 
-const HEADERS = [
+const HEADERS = fromJS([
   { name: 'famoco_id', tooltip: '', label: 'FAMOCO ID', numeric: false },
   { name: 'fleet', tooltip: '', label: 'Fleet', numeric: false },
   { name: 'profile', tooltip: '', label: 'Profile', numeric: false },
@@ -24,21 +24,27 @@ const HEADERS = [
   { name: 'heartbeat', tooltip: '', label: 'Heartbeat', numeric: false },
   { name: 'model', tooltip: '', label: 'Model', numeric: false },
   { name: 'imei', tooltip: '', label: 'IMEI', numeric: false, cellFormatter: (imeis) => imeis.join() }
-];
+]);
 
 const DataTable = ({ data }, { height }) => {
-  console.log(data)
+  const rows = List.isList(data) ? data.toJS() : data;
   return (
     <TableWrapper className="mdl-shadow--4dp">
-      <div className="mdl-card__title">
+      <div className="mdl-card__title" style={{ display: 'flex', justifyContent: 'space-between' }}>
         <h2 className="mdl-card__title-text">DataTable</h2>
+        <div style={{position: 'relative'}}>
+          <IconButton name="filter_list" id="table-headers-filter" />
+          <Menu target="table-headers-filter" align="right">
+            {HEADERS.map(header => <MenuItem key={header.get('name')}>{header.get('label')}</MenuItem>).toArray()}
+          </Menu>
+        </div>
       </div>
       <TableInnerWrapper height={height - 94}>
         <Table
           selectable
           shadow={0}
           rowKeyColumn="id"
-          rows={data}
+          rows={rows}
         >
           {generateHeaders(HEADERS)}
         </Table>

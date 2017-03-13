@@ -1,6 +1,6 @@
 import React, { Component, PropTypes } from 'react';
 import { gql, graphql } from 'react-apollo';
-
+import { fromJS } from 'immutable';
 import { Layout, Content } from 'react-mdl'
 
 import NavigationBar from '../../components/NavigationBar';
@@ -76,7 +76,7 @@ class HomePage extends Component {
           />
           <Content component={Container}>
             <InnerContainer className="mdl-card mdl-shadow--2dp">
-              <DataTable data={data}/>
+              <DataTable data={fromJS(data)}/>
             </InnerContainer>
           </Content>
         </Layout>

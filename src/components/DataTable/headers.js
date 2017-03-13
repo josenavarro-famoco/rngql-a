@@ -9,12 +9,13 @@ const HEADERS = [
 
 const generateHeaders = (headers = HEADERS) => headers.map((header) => (
   <TableHeader
-    name={header.name}
-    tooltip={header.tooltip}
-    numeric={header.numeric}
-    cellFormatter={header.cellFormatter}
+    key={header.get('name')}
+    name={header.get('name')}
+    tooltip={header.get('tooltip')}
+    numeric={header.get('numeric')}
+    cellFormatter={header.get('cellFormatter')}
   >
-    {header.label}
+    {header.get('label')}
   </TableHeader>
 ))
 
