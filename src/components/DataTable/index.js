@@ -17,17 +17,19 @@ const ROWS = [
 const HEADERS = fromJS([
   { name: 'famoco_id', tooltip: '', label: 'FAMOCO ID', numeric: false },
   { name: 'fleet', tooltip: '', label: 'Fleet', numeric: false },
-  { name: 'profile', tooltip: '', label: 'Profile', numeric: false },
+  // { name: 'profile', tooltip: '', label: 'Profile', numeric: false },
   { name: 'last_sync', tooltip: '', label: 'Last Sync', numeric: false },
   { name: 'sync_status', tooltip: '', label: 'Sync Status', numeric: false },
   { name: 'maintenance_status', tooltip: '', label: 'Maintenance Status', numeric: false },
   { name: 'heartbeat', tooltip: '', label: 'Heartbeat', numeric: false },
   { name: 'model', tooltip: '', label: 'Model', numeric: false },
-  { name: 'imei', tooltip: '', label: 'IMEI', numeric: false, cellFormatter: (imeis) => imeis.join() }
+  { name: 'imei', tooltip: '', label: 'IMEI', numeric: false, cellFormatter: (imeis) => imeis.join() },
+  { name: 'logs', tooltip: '', label: 'Logs', numeric: false, cellFormatter: (logs) => logs.results.map(log => log.description).join(' || ') }
 ]);
 
 const DataTable = ({ data }, { height }) => {
-  const rows = List.isList(data) ? data.toJS() : data;
+  const rows = data.get('results').toJS();
+  console.log(rows)
   return (
     <TableWrapper className="mdl-shadow--4dp">
       <div className="mdl-card__title" style={{ display: 'flex', justifyContent: 'space-between' }}>
@@ -49,9 +51,9 @@ const DataTable = ({ data }, { height }) => {
           {generateHeaders(HEADERS)}
         </Table>
       </TableInnerWrapper>
-      <div className="mdl-card__actions">
+      {/*<div className="mdl-card__actions">
         Page 1 of 10
-      </div>
+      </div>*/}
     </TableWrapper>
   );
 }

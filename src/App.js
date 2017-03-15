@@ -3,15 +3,26 @@ import React, { Component } from 'react';
 import LoginPage from './containers/LoginPage'
 import HomePage from './containers/HomePage';
 
+import { AUTH_TOKEN } from './constants';
+
 class App extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      loggedIn: true,
+      loggedIn: false,
     }
   }
 
-  onLogin = () => {
+  componentDidMount() {
+    const token = localStorage.getItem(AUTH_TOKEN);
+    if (token) {
+      this.setState({ loggedIn: true });
+    }
+  }
+
+  onLogin = (loginData) => {
+    const accessToken = loginData.get('access_token')
+    localStorage.setItem(AUTH_TOKEN, accessToken);
     this.setState({ loggedIn: true });
   }
 

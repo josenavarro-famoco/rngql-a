@@ -37,8 +37,10 @@ export const Container = styled.div`
 
 export const InnerContainer = styled.div`
   // margin: -32px auto 32px;
-  margin: 16px auto;
-  width: 1024px;
-  max-width: 1024px;
+  // margin: 16px auto;
+  margin: 16px;
+  // width: 1024px;
+  // max-width: 1024px;
+  width: 100%;
   background: white;
 `;

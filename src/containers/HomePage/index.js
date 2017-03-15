@@ -6,6 +6,8 @@ import { Layout, Content } from 'react-mdl'
 import NavigationBar from '../../components/NavigationBar';
 import DataTable from '../../components/DataTable';
 
+import { ITEMS_PER_PAGE } from '../../constants';
+
 import {
   Wrapper,
   Container,
@@ -36,23 +38,23 @@ class HomePage extends Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    if (!nextProps.data.loading && this.props.data.loading) {
-      console.log('stop loading')
-      nextProps.data.updateQuery((previosuResult, variables) => {
-        console.log('c', previosuResult)
-        console.log('a', variables)
-        return ({
-          ...previosuResult,
-          variable: {
-            organizationId: nextProps.data.organizations[0].id,
-            hasSelectedOrganization: true,
-          }
-        })
-      })
-    }
-    if (nextProps.data.variables.hasSelectedOrganization && !this.props.data.variables.hasSelectedOrganization) {
-      nextProps.data.refetch()
-    }
+    // if (!nextProps.data.loading && this.props.data.loading) {
+    //   console.log('stop loading')
+    //   nextProps.data.updateQuery((previosuResult, variables) => {
+    //     console.log('c', previosuResult)
+    //     console.log('a', variables)
+    //     return ({
+    //       ...previosuResult,
+    //       variable: {
+    //         organizationId: nextProps.data.organizations[0].id,
+    //         hasSelectedOrganization: true,
+    //       }
+    //     })
+    //   })
+    // }
+    // if (nextProps.data.variables.hasSelectedOrganization && !this.props.data.variables.hasSelectedOrganization) {
+    //   nextProps.data.refetch()
+    // }
   }
 
   componentWillUnmount() {
@@ -65,8 +67,9 @@ class HomePage extends Component {
   }
 
   render() {
-    const { onLogout, data: { organization } } = this.props;
-    const data = organization ? organization.devices : [];
+    console.log(this.props)
+    const { onLogout, data: { organization, loading } } = this.props;
+    const data = !loading && organization ? organization.devices : { count: 0, results: []};
     return (
       <Wrapper>
         <Layout>
@@ -76,7 +79,7 @@ class HomePage extends Component {
           />
           <Content component={Container}>
             <InnerContainer className="mdl-card mdl-shadow--2dp">
-              <DataTable data={fromJS(data)}/>
+              {loading ? <p>loading</p> : <DataTable data={fromJS(data)}/>}
             </InnerContainer>
           </Content>
         </Layout>
@@ -91,15 +94,14 @@ const HomePageQuery = gql`
       username
       email
     }
-    organizations {
-      id
-      name
-    }
     organization(id: $organizationId) @include(if: $hasSelectedOrganization){
       id
       name
-      devices{
-        ...DeviceTable
+      devices {
+        count
+        results {
+          ...DeviceTable
+        }
       }
     }
   }
@@ -114,6 +116,13 @@ const HomePageQuery = gql`
     model
     last_sync
     sync_status
+    logs {
+      count
+      results {
+        name
+        description
+      }
+    }
   }
 `;
 
@@ -123,6 +132,33 @@ export const AppWithData = graphql(HomePageQuery, {
       organizationId: 3,
       hasSelectedOrganization: true,
     },
+    // props({ data: { loading, currentUser, organization, fetchMore }}) {
+    //   return {
+    //     loading,
+    //     currentUser,
+    //     organization,
+    //     loadMoreDevices() {
+    //       return fetchMore({
+    //         variables: {
+    //           offset: organization.devices.results.length,
+    //         },
+    //         updateQuery: (previosuResult, { fetchMoreResult }) => {
+    //           if (!fetchMoreResult.data) {
+    //             return previosuResult;
+    //           }
+    //           return Object.assign(
+    //             {},
+    //             previosuResult,
+    //             Object,assign(
+    //               {},
+    //               previosuResult.organization
+    //             )
+    //           )
+    //         }
+    //       })
+    //     }
+    //   }
+    // }
   })
 })(HomePage);
 
