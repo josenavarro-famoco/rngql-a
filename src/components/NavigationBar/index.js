@@ -1,5 +1,5 @@
 import React from 'react';
-import { Header, IconButton, Menu, MenuItem } from 'react-mdl';
+import { IconButton, Menu, MenuItem } from 'react-mdl';
 
 import {
   Wrapper,
@@ -7,15 +7,16 @@ import {
 
 const NavigationBar = ({ title, onLogout }) => {
   return (
-    <Header title={title}>
+    <Wrapper>
+      <div className="mdl-typography--display-1">{title}</div>
       <div style={{ position: 'relative'}}>
         <IconButton name="account_circle" id="navigation-bar-user-menu" />
         <Menu target="navigation-bar-user-menu" align="right">
           <MenuItem>Profile</MenuItem>
           <MenuItem onClick={onLogout}>Logout</MenuItem>
-        </Menu>
+          </Menu>
       </div>
-    </Header>
+    </Wrapper>
   );
 }
 

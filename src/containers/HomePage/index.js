@@ -1,7 +1,7 @@
 import React, { Component, PropTypes } from 'react';
 import { gql, graphql } from 'react-apollo';
 import { fromJS } from 'immutable';
-import { Layout, Content } from 'react-mdl'
+import { Layout, Content, Grid, Cell } from 'react-mdl'
 
 import NavigationBar from '../../components/NavigationBar';
 import DataTable from '../../components/DataTable';
@@ -38,23 +38,6 @@ class HomePage extends Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    // if (!nextProps.data.loading && this.props.data.loading) {
-    //   console.log('stop loading')
-    //   nextProps.data.updateQuery((previosuResult, variables) => {
-    //     console.log('c', previosuResult)
-    //     console.log('a', variables)
-    //     return ({
-    //       ...previosuResult,
-    //       variable: {
-    //         organizationId: nextProps.data.organizations[0].id,
-    //         hasSelectedOrganization: true,
-    //       }
-    //     })
-    //   })
-    // }
-    // if (nextProps.data.variables.hasSelectedOrganization && !this.props.data.variables.hasSelectedOrganization) {
-    //   nextProps.data.refetch()
-    // }
   }
 
   componentWillUnmount() {
@@ -77,11 +60,21 @@ class HomePage extends Component {
             title="Famoco Management Suite"
             onLogout={onLogout}
           />
-          <Content component={Container}>
-            <InnerContainer className="mdl-card mdl-shadow--2dp">
-              {loading ? <p>loading</p> : <DataTable data={fromJS(data)}/>}
-            </InnerContainer>
-          </Content>
+          <Container>
+            <Grid>
+              <Cell col={1} hidePhone hideTablet>
+                d
+              </Cell>
+              <Cell col={10}>
+                <InnerContainer className="mdl-card mdl-shadow--2dp">
+                  {loading ? <p>loading</p> : <DataTable data={fromJS(data)}/>}
+                </InnerContainer>
+              </Cell>
+              <Cell col={1} hidePhone hideTablet>
+                do
+              </Cell>
+            </Grid>
+          </Container>
         </Layout>
       </Wrapper>
     );

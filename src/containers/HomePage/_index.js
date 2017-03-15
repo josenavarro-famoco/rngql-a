@@ -1,6 +1,6 @@
 import React, { Component, PropTypes } from 'react';
 import { gql, graphql } from 'react-apollo';
-
+import { Grid, Cell } from 'react-mdl';
 import NavigationBar from '../../components/NavigationBar';
 import Profile from '../../components/profile';
 import DeviceTable from '../../components/deviceTable';
@@ -36,23 +36,7 @@ class HomePage extends Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    if (!nextProps.data.loading && this.props.data.loading) {
-      console.log('stop loading')
-      nextProps.data.updateQuery((previosuResult, variables) => {
-        console.log('c', previosuResult)
-        console.log('a', variables)
-        return ({
-          ...previosuResult,
-          variable: {
-            organizationId: nextProps.data.organizations[0].id,
-            hasSelectedOrganization: true,
-          }
-        })
-      })
-    }
-    if (nextProps.data.variables.hasSelectedOrganization && !this.props.data.variables.hasSelectedOrganization) {
-      nextProps.data.refetch()
-    }
+
   }
 
   componentWillUnmount() {
@@ -73,44 +57,23 @@ class HomePage extends Component {
           onLogout={onLogout}
         />
         <Container>
-          <InnerContainer className="mdl-card mdl-shadow--2dp">
-            <DataTable />
-          </InnerContainer>
+          <Grid>
+            <Cell col={1} hidePhone hideTablet>
+              d
+            </Cell>
+            <Cell col={10} hidePhone hideTablet>
+              <InnerContainer className="mdl-card mdl-shadow--2dp">
+                adasd
+              </InnerContainer>
+            </Cell>
+            <Cell col={1} hidePhone hideTablet>
+              do
+            </Cell>
+          </Grid>
         </Container>
       </Wrapper>
     );
   }
 }
 
-const HomePageQuery = gql`
-  query ($organizationId: ID!, $hasSelectedOrganization: Boolean!) {
-    currentUser {
-      ...CurrentUser
-    }
-    organizations {
-      id
-      name
-    }
-    organization(id: $organizationId) @include(if: $hasSelectedOrganization){
-      id
-      name
-      devices{
-        ...DeviceTable
-      }
-    }
-  }
-  ${Profile.fragments.currentUser}
-  ${DeviceTable.fragments.table}
-`;
-
-export const AppWithData = graphql(HomePageQuery, {
-  options: (props) => ({
-    variables: {
-      organizationId: 3,
-      hasSelectedOrganization: false,
-    },
-  })
-})(HomePage);
-
-// export default AppWithData;
 export default HomePage;

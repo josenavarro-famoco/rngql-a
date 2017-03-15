@@ -10,7 +10,7 @@ export const Wrapper = styled.div`
 `;
 
 export const Header = styled.div`
-  height: 144px;
+  height: 124px;
   background: green;
   display: flex;
   justify-content: space-between;
@@ -27,20 +27,30 @@ export const Actions = styled.div`
 `;
 
 export const Container = styled.div`
-  display: flex;
-  flex-grow: 1;
-  flex-basis: auto;
-  background: red;
-  flex-direction: row;
-  position: relative;
+  width: 100%;
+  height: calc(100vh - 124px);
+  background: #e0e0e0;
+  & .mdl-grid {
+    height: 100%;
+    padding: 0;
+  }
+  & .mdl-cell:nth-child(2) {
+    margin: 0;
+  }
+  @media (max-width: 839px) {
+    height: calc(100vh - 64px);
+    & .mdl-cell:nth-child(2) {
+      width: 100%;
+    }
+  }
 `;
 
 export const InnerContainer = styled.div`
-  // margin: -32px auto 32px;
-  // margin: 16px auto;
-  margin: 16px;
-  // width: 1024px;
-  // max-width: 1024px;
   width: 100%;
+  height: 100%;
   background: white;
+
+  @media (min-width: 840px) {
+    margin-top: -32px;
+  }
 `;
