@@ -63,7 +63,6 @@ class HomePage extends Component {
           <Container>
             <Grid>
               <Cell col={1} hidePhone hideTablet>
-                d
               </Cell>
               <Cell col={10}>
                 <InnerContainer className="mdl-card mdl-shadow--2dp">
@@ -71,7 +70,6 @@ class HomePage extends Component {
                 </InnerContainer>
               </Cell>
               <Cell col={1} hidePhone hideTablet>
-                do
               </Cell>
             </Grid>
           </Container>

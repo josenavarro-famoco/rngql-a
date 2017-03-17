@@ -10,7 +10,7 @@ import { AUTH_TOKEN } from './constants';
 import App from './App';
 import './index.css';
 
-const networkInterface = createNetworkInterface({ uri: 'http://localhost:8080/graphql' });
+const networkInterface = createNetworkInterface({ uri: 'http://10.111.4.12:8080/graphql' });
 networkInterface.use([{
   applyMiddleware(req, next) {
     if (!req.options.headers) {
